@@ -38,9 +38,10 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    getTodos().then(res => {
-      setTodos(formatTodos(res as TodoResponse[]));
-    })
+    getTodos()
+      .then(res => {
+        setTodos(formatTodos(res as TodoResponse[]));
+      })
       .catch(() => showError())
       .finally(() => {
         setIsLoading(false);
@@ -49,8 +50,9 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     setTodosToRender(todos);
-    setIsSameStatus(todos
-      .every(a => todos.every(b => b.completed === a.completed)));
+    setIsSameStatus(
+      todos.every(a => todos.every(b => b.completed === a.completed)),
+    );
   }, [todos]);
 
   const toggleAll = () => {
@@ -60,8 +62,7 @@ export const App: React.FC = () => {
       return;
     }
 
-    setTodos([...todos]
-      .map(item => ({ ...item, completed: !item.completed })));
+    setTodos([...todos].map(item => ({ ...item, completed: !item.completed })));
   };
 
   if (!USER_ID) {
@@ -81,38 +82,34 @@ export const App: React.FC = () => {
           setTodos={setTodos}
           setIsToggleAll={setIsToggleAll}
         />
-        {todos && !isLoading
-          ? (
-            <>
-              <Main
-                todos={todos}
-                todosToRender={todosToRender}
-                tempTodo={tempTodo}
-                isTempLoading={isTempLoading}
-                setTodos={setTodos}
-                showError={showError}
-                toBeCleared={toBeCleared}
-                isToggleAll={isToggleAll}
-                setIsToggleAll={setIsToggleAll}
-                isSameStatus={isSameStatus}
-                toggleAll={toggleAll}
-              />
-              <Footer
-                todos={todos}
-                todosToRender={todosToRender}
-                setTodosToRender={setTodosToRender}
-                setToBeCleared={setToBeCleared}
-              />
-            </>
-          )
-          : !errors && <Loader />}
+        {todos && !isLoading ? (
+          <>
+            <Main
+              todos={todos}
+              todosToRender={todosToRender}
+              tempTodo={tempTodo}
+              isTempLoading={isTempLoading}
+              setTodos={setTodos}
+              showError={showError}
+              toBeCleared={toBeCleared}
+              isToggleAll={isToggleAll}
+              setIsToggleAll={setIsToggleAll}
+              isSameStatus={isSameStatus}
+              toggleAll={toggleAll}
+            />
+            <Footer
+              todos={todos}
+              todosToRender={todosToRender}
+              setTodosToRender={setTodosToRender}
+              setToBeCleared={setToBeCleared}
+            />
+          </>
+        ) : (
+          !errors && <Loader />
+        )}
       </div>
-      {!!errors.length
-      && (
-        <Notification
-          errors={errors}
-          setErrors={setErrors}
-        />
+      {!!errors.length && (
+        <Notification errors={errors} setErrors={setErrors} />
       )}
     </div>
   );

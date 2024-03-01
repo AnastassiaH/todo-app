@@ -30,7 +30,7 @@ export const Header: React.FC<Props> = ({
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!newTodoTitle) {
-      showError('Title can\'t be empty');
+      showError("Title can't be empty");
 
       return;
     }
@@ -46,9 +46,12 @@ export const Header: React.FC<Props> = ({
 
     postTodo({ ...rawTodo, userId: USER_ID })
       .then(res => {
-        setTodos([...todos, {
-          ...formatTodo(res as TodoResponse),
-        }]);
+        setTodos([
+          ...todos,
+          {
+            ...formatTodo(res as TodoResponse),
+          },
+        ]);
         setNewTodoTitle('');
       })
       .catch(() => {
@@ -82,7 +85,7 @@ export const Header: React.FC<Props> = ({
           className="todoapp__new-todo"
           placeholder="What needs to be done?"
           value={newTodoTitle}
-          onChange={(e) => setNewTodoTitle(e.target.value)}
+          onChange={e => setNewTodoTitle(e.target.value)}
           disabled={isDisabled}
           ref={refInput}
         />

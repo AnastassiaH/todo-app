@@ -6,7 +6,9 @@ export const formatTodo = (data: TodoResponse): Todo => {
   const { id, title, completed } = data;
 
   return {
-    id, title, completed,
+    id,
+    title,
+    completed,
   };
 };
 

@@ -3,10 +3,10 @@ import { Todo } from '../../types/Todo';
 import { FILTER_OPTIONS } from '../../utils/constants';
 
 type Props = {
-  todos: Todo[],
-  todosToRender: Todo[]
+  todos: Todo[];
+  todosToRender: Todo[];
   setTodosToRender: (todos: Todo[]) => void;
-  setToBeCleared: (todos: Todo[]) => void
+  setToBeCleared: (todos: Todo[]) => void;
 };
 
 export const Footer: React.FC<Props> = ({
@@ -21,19 +21,21 @@ export const Footer: React.FC<Props> = ({
   }, [todos]);
 
   const filterTodos = (value: string) => {
-    setTodosToRender(todos.filter(({ completed }) => {
-      switch (value) {
-        case 'All':
-          return true;
-        case 'Active':
-          return !completed;
-        case 'Completed':
-          return completed;
-        default:
-      }
+    setTodosToRender(
+      todos.filter(({ completed }) => {
+        switch (value) {
+          case 'All':
+            return true;
+          case 'Active':
+            return !completed;
+          case 'Completed':
+            return completed;
+          default:
+        }
 
-      return false;
-    }));
+        return false;
+      }),
+    );
     setSelectedButton(value);
   };
 
@@ -43,9 +45,7 @@ export const Footer: React.FC<Props> = ({
 
   return (
     <footer className="todoapp__footer">
-      <span className="todo-count">
-        {`${itemsLeft} items left`}
-      </span>
+      <span className="todo-count">{`${itemsLeft} items left`}</span>
 
       <nav className="filter">
         {FILTER_OPTIONS.map(item => (
@@ -68,7 +68,6 @@ export const Footer: React.FC<Props> = ({
       >
         Clear completed
       </button>
-
     </footer>
   );
 };

@@ -4,17 +4,17 @@ import { Loader } from '../Loader';
 import { deleteTodo, updateTodo } from '../../api/todos';
 
 type Props = {
-  todo: Todo,
-  isTempLoading?: boolean,
-  setTodos?: (todos: Todo[]) => void,
-  showError?: (title: string) => void,
-  todosToRender?: Todo[],
-  toBeCleared?: Todo[],
-  isToggleAll?: boolean,
-  setIsToggleAll?: (val: boolean) => void,
-  todos?: Todo[],
-  isSameStatus?: boolean,
-  toggleAll?: () => void,
+  todo: Todo;
+  isTempLoading?: boolean;
+  setTodos?: (todos: Todo[]) => void;
+  showError?: (title: string) => void;
+  todosToRender?: Todo[];
+  toBeCleared?: Todo[];
+  isToggleAll?: boolean;
+  setIsToggleAll?: (val: boolean) => void;
+  todos?: Todo[];
+  isSameStatus?: boolean;
+  toggleAll?: () => void;
 };
 
 export const TodoItem: React.FC<Props> = ({
@@ -61,19 +61,22 @@ export const TodoItem: React.FC<Props> = ({
 
   const onStatusChange = (todoId: number, todoCompleted = !completed) => {
     setIsLoading(true);
-    updateTodo(todoId, { completed: todoCompleted }).then(() => {
-      if (!isToggleAll) {
-        setTodos([...todos].map(item => {
-          return item.id === todoId
-            ? { ...item, completed: !item.completed }
-            : item;
-        }));
-      }
+    updateTodo(todoId, { completed: todoCompleted })
+      .then(() => {
+        if (!isToggleAll) {
+          setTodos(
+            [...todos].map(item => {
+              return item.id === todoId
+                ? { ...item, completed: !item.completed }
+                : item;
+            }),
+          );
+        }
 
-      if (isToggleAll) {
-        toggleAll();
-      }
-    })
+        if (isToggleAll) {
+          toggleAll();
+        }
+      })
       .catch(() => {
         showError('Unable to update a todo');
       })
@@ -115,11 +118,11 @@ export const TodoItem: React.FC<Props> = ({
 
     updateTodo(id, { title: editTitle })
       .then(() => {
-        setTodos([...todos.map(item => {
-          return item.id === id
-            ? { ...item, title: editTitle }
-            : item;
-        })]);
+        setTodos([
+          ...todos.map(item => {
+            return item.id === id ? { ...item, title: editTitle } : item;
+          }),
+        ]);
       })
       .catch(() => {
         showError('Unable to update a todo');
@@ -141,48 +144,47 @@ export const TodoItem: React.FC<Props> = ({
       className={`todo${completed ? ' completed' : ''}`}
       onDoubleClick={() => setIsBeingEdited(true)}
     >
-      <label className="todo__status-label">
+      <label className="todo__status-label" htmlFor='todo-status'></label>
         <input
+          id='todo-status'
           type="checkbox"
           className="todo__status"
           checked={completed}
           onChange={() => onStatusChange(id)}
         />
-      </label>
+      
 
-      {isBeingEdited
-        ? (
-          <form
-            className="todo__title-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              edit();
-            }}
+      {isBeingEdited ? (
+        <form
+          className="todo__title-form"
+          onSubmit={e => {
+            e.preventDefault();
+            edit();
+          }}
+        >
+          <input
+            type="text"
+            className="todo__title-field"
+            placeholder="Empty todo will be deleted"
+            value={editTitle}
+            ref={refInput}
+            onChange={e => setEditTitle(e.target.value)}
+            onBlur={() => edit()}
+            onKeyUp={e => onEscape(e.key)}
+          />
+        </form>
+      ) : (
+        <>
+          <span className="todo__title">{title}</span>
+          <button
+            type="button"
+            className="todo__remove"
+            onClick={() => onDelete(id)}
           >
-            <input
-              type="text"
-              className="todo__title-field"
-              placeholder="Empty todo will be deleted"
-              value={editTitle}
-              ref={refInput}
-              onChange={(e) => setEditTitle(e.target.value)}
-              onBlur={() => edit()}
-              onKeyUp={(e) => onEscape(e.key)}
-            />
-          </form>
-        )
-        : (
-          <>
-            <span className="todo__title">{title}</span>
-            <button
-              type="button"
-              className="todo__remove"
-              onClick={() => onDelete(id)}
-            >
-              ×
-            </button>
-          </>
-        )}
+            ×
+          </button>
+        </>
+      )}
 
       {(isTempLoading || isLoading) && (
         <>

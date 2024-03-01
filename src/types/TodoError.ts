@@ -1,4 +1,4 @@
 export type TodoError = {
-  title: string,
-  isImportant: boolean,
+  title: string;
+  isImportant: boolean;
 };

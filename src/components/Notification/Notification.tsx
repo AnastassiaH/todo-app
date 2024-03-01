@@ -28,7 +28,9 @@ export const Notification: React.FC<Props> = ({ errors, setErrors }) => {
   }, [closeError]);
 
   return (
-    <div className={`notification${isImportant ? ' is-danger' : ' is-light'} has-text-weight-normal${isHidden ? ' hidden' : ''}`}>
+    <div
+      className={`notification${isImportant ? ' is-danger' : ' is-light'} has-text-weight-normal${isHidden ? ' hidden' : ''}`}
+    >
       <button
         type="button"
         className="delete"

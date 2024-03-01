@@ -3,17 +3,17 @@ import { Todo } from '../../types/Todo';
 import { TodoItem } from '../TodoItem';
 
 type Props = {
-  todos: Todo[],
-  todosToRender: Todo[],
-  tempTodo: Todo | null,
-  isTempLoading: boolean,
-  setTodos: (todos: Todo[]) => void,
-  showError: (title: string) => void,
-  toBeCleared: Todo[],
-  isToggleAll: boolean,
-  setIsToggleAll: (val: boolean) => void,
-  isSameStatus: boolean,
-  toggleAll: () => void,
+  todos: Todo[];
+  todosToRender: Todo[];
+  tempTodo: Todo | null;
+  isTempLoading: boolean;
+  setTodos: (todos: Todo[]) => void;
+  showError: (title: string) => void;
+  toBeCleared: Todo[];
+  isToggleAll: boolean;
+  setIsToggleAll: (val: boolean) => void;
+  isSameStatus: boolean;
+  toggleAll: () => void;
 };
 
 export const Main: React.FC<Props> = ({
@@ -32,7 +32,6 @@ export const Main: React.FC<Props> = ({
   return (
     <section className="todoapp__main">
       {todosToRender.map(todo => (
-
         <TodoItem
           key={todo.id}
           todo={todo}
@@ -47,12 +46,7 @@ export const Main: React.FC<Props> = ({
           toggleAll={toggleAll}
         />
       ))}
-      {tempTodo && (
-        <TodoItem
-          todo={tempTodo}
-          isTempLoading={isTempLoading}
-        />
-      )}
+      {tempTodo && <TodoItem todo={tempTodo} isTempLoading={isTempLoading} />}
     </section>
   );
 };
