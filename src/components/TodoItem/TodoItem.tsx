@@ -144,7 +144,7 @@ export const TodoItem: React.FC<Props> = ({
       className={`todo${completed ? ' completed' : ''}`}
       onDoubleClick={() => setIsBeingEdited(true)}
     >
-      <label className="todo__status-label" htmlFor="todo-status"></label>
+      <label className="todo__status-label" htmlFor="todo-status" />
       <input
         id="todo-status"
         type="checkbox"
