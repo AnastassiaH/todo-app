@@ -16,3 +16,5 @@ Need to make changes to a task? ReactToDo allows you to update task details with
 
 Effortless Deletion:
 ReactToDo allows you to delete tasks with a single click, ensuring that your task management experience is as efficient as possible.
+
+[DEMO](https://anastassiah.github.io/todo-app/);
