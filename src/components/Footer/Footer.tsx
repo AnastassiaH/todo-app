@@ -44,30 +44,34 @@ export const Footer: React.FC<Props> = ({
   };
 
   return (
-    <footer className="todoapp__footer">
-      <span className="todo-count">{`${itemsLeft} items left`}</span>
+    <>
+      {!!todosToRender.length && (
+        <footer className="todoapp__footer">
+          <span className="todo-count">{`${itemsLeft} items left`}</span>
 
-      <nav className="filter">
-        {FILTER_OPTIONS.map(item => (
-          <a
-            href={`#/${item !== 'All' ? item.toLowerCase() : ''}`}
-            className={`filter__link${selectedButton === item ? ' selected' : ''}`}
-            onClick={() => filterTodos(item)}
-            key={item}
+          <nav className="filter">
+            {FILTER_OPTIONS.map(item => (
+              <a
+                href={`#/${item !== 'All' ? item.toLowerCase() : ''}`}
+                className={`filter__link${selectedButton === item ? ' selected' : ''}`}
+                onClick={() => filterTodos(item)}
+                key={item}
+              >
+                {item}
+              </a>
+            ))}
+          </nav>
+
+          <button
+            type="button"
+            className="todoapp__clear-completed"
+            disabled={!todosToRender.some((item: Todo) => item.completed)}
+            onClick={onClearCompleted}
           >
-            {item}
-          </a>
-        ))}
-      </nav>
-
-      <button
-        type="button"
-        className="todoapp__clear-completed"
-        disabled={!todosToRender.some((item: Todo) => item.completed)}
-        onClick={onClearCompleted}
-      >
-        Clear completed
-      </button>
-    </footer>
+            Clear completed
+          </button>
+        </footer>
+      )}
+    </>
   );
 };
