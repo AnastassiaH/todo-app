@@ -45,7 +45,7 @@ export const Footer: React.FC<Props> = ({
 
   return (
     <>
-      {!!todosToRender.length && (
+      {!!todos.length && (
         <footer className="todoapp__footer">
           <span className="todo-count">{`${itemsLeft} items left`}</span>
 
